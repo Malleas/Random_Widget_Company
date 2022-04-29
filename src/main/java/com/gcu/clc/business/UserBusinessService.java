@@ -4,8 +4,11 @@ import com.gcu.clc.data.UserDataService;
 import com.gcu.clc.model.LoginModel;
 import com.gcu.clc.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,6 +30,19 @@ public class UserBusinessService implements UserDetailsService {
 
     public boolean createUser(UserModel userModel){
         return userDataService.create(userModel);
+    }
+
+    public int getUserIdByUsername(String username){
+        return userDataService.getUserIdByName(username);
+    }
+
+    public String getUserName(){
+        String currentUsername = "";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(!(authentication instanceof AnonymousAuthenticationToken)){
+            currentUsername = authentication.getName();
+        }
+        return currentUsername;
     }
 
     @Override

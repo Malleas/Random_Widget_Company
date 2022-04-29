@@ -43,6 +43,21 @@ public class UserDataService implements DataAccessInterface<UserModel> {
         return users;
     }
 
+    public int getUserIdByName(String userName){
+        String sql = "SELECT USER_ID FROM USER WHERE USERNAME = ?";
+        int userId = 0;
+        try {
+            SqlRowSet srs = jdbcTemplate.queryForRowSet(sql, userName);
+            while (srs.next()) {
+                userId = srs.getInt("USER_ID");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return userId;
+    }
+
     @Override
     public UserModel getById(int id) {
         String sql = "SELECT * FROM USER WHERE USER_ID = ?";
