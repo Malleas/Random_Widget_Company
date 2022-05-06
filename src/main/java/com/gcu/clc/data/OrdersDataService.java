@@ -35,6 +35,7 @@ public class OrdersDataService implements DataAccessInterface<OrderModel> {
             while (srs.next()){
                 orders.add(new OrderModel(
                    srs.getInt("ORDER_ID"),
+                   srs.getInt("PURCHASE_ID"),
                    srs.getInt("USER_ID"),
                    srs.getInt("ADDRESS_ID"),
                    srs.getInt("PRODUCT_ID"),
@@ -68,9 +69,9 @@ public class OrdersDataService implements DataAccessInterface<OrderModel> {
 
     @Override
     public boolean create(OrderModel orderModel) {
-        String sql = "INSERT INTO ORDERS(USER_ID, ADDRESS_ID, PRODUCT_ID, ORDER_TOTAL) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO ORDERS(PURCHASE_ID, USER_ID, ADDRESS_ID, PRODUCT_ID, ORDER_TOTAL) VALUES(?,?,?,?,?)";
         try {
-            jdbcTemplate.update(sql, orderModel.getUserId(), orderModel.getAddressId(), orderModel.getProductId(),
+            jdbcTemplate.update(sql, orderModel.getPurchaseId(), orderModel.getUserId(), orderModel.getAddressId(), orderModel.getProductId(),
                     orderModel.getOrderTotal());
         }catch (Exception e){
             e.printStackTrace();
@@ -81,9 +82,9 @@ public class OrdersDataService implements DataAccessInterface<OrderModel> {
 
     @Override
     public boolean update(OrderModel orderModel) {
-        String sql = "UPDATE ORDERS SET USER_ID = ?, ADDRESS_ID = ? WHERE ORDER_ID = ?";
+        String sql = "UPDATE ORDERS SET USER_ID = ?, ADDRESS_ID = ? WHERE PURCHASE_ID = ?";
         try {
-            jdbcTemplate.update(sql, orderModel.getUserId(), orderModel.getAddressId(), orderModel.getOrderId());
+            jdbcTemplate.update(sql, orderModel.getUserId(), orderModel.getAddressId(), orderModel.getPurchaseId());
         }catch (Exception e){
             e.printStackTrace();
             return false;
@@ -93,9 +94,9 @@ public class OrdersDataService implements DataAccessInterface<OrderModel> {
 
     @Override
     public boolean delete(OrderModel orderModel) {
-        String sql = "DELETE FROM ORDERS WHERE ORDER_ID = ?";
+        String sql = "DELETE FROM ORDERS WHERE PURCHASE_ID = ?";
         try {
-            jdbcTemplate.update(sql, orderModel.getOrderId());
+            jdbcTemplate.update(sql, orderModel.getPurchaseId());
         }catch (Exception e){
             e.printStackTrace();
             return false;

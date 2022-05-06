@@ -6,6 +6,7 @@ import com.gcu.clc.business.UserBusinessService;
 import com.gcu.clc.model.AddressModel;
 import com.gcu.clc.model.CreditCardModel;
 import com.gcu.clc.model.OrderModel;
+import com.gcu.clc.model.ProductModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 @Controller
 @RequestMapping("/checkout")
@@ -42,16 +46,21 @@ public class CheckoutController {
     public ModelAndView purchase(@Valid CreditCardModel creditCardModel, BindingResult bindingResult, Model model, HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("purchaseComplete");
-        OrderModel orderModel = new OrderModel();
         int userId = (int) request.getSession().getAttribute("userId");
-        orderModel.setUserId(userId);
-        orderModel.setAddressId(addressBusinessService.getAddressIdByUserId(userId));
-        if(bindingResult.hasErrors()){
-            model.addAttribute("title", "Add Address Page");
-            return modelAndView;
-        }
-        if(ordersBusinessService.addOrder(orderModel)){
-            modelAndView.setViewName("index");
+        int addressId = addressBusinessService.getAddressIdByUserId(userId);
+        List<ProductModel> cart = (List<ProductModel>) request.getSession().getAttribute("cart");
+        float total = 0;
+        Random random = new Random();
+        int purchaseId = random.nextInt(100000);
+        for (ProductModel product: cart) {
+            total = total + (product.getProductQuantity() * product.getProductPrice());
+            OrderModel orderModel = new OrderModel();
+            orderModel.setUserId(userId);
+            orderModel.setAddressId(addressId);
+            orderModel.setPurchaseId(purchaseId);
+            orderModel.setProductId(product.getProductId());
+            orderModel.setOrderTotal(total);
+            ordersBusinessService.addOrder(orderModel);
         }
         return modelAndView;
     }

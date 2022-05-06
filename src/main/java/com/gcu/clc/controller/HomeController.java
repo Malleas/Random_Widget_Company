@@ -2,6 +2,7 @@ package com.gcu.clc.controller;
 
 import com.gcu.clc.business.UserBusinessService;
 import com.gcu.clc.model.LoginModel;
+import com.gcu.clc.model.ProductModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,10 +16,12 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
-@SessionAttributes({"user", "userId"})
+@SessionAttributes({"user", "userId", "cart"})
 public class HomeController {
 
     @Autowired
@@ -27,11 +30,13 @@ public class HomeController {
     @GetMapping("/index")
     public ModelAndView index(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView();
-        LoginModel loginModel = new LoginModel();
+        List<ProductModel> cart = new ArrayList<>();
         String currentUsername = userBusinessService.getUserName();
         int userId = userBusinessService.getUserIdByUsername(currentUsername);
         request.getSession().setAttribute("user", currentUsername);
         request.getSession().setAttribute("userId", userId);
+        request.getSession().setAttribute("cart", cart);
+        HttpSession session = request.getSession();
         modelAndView.setViewName("index");
         return modelAndView;
     }
