@@ -19,7 +19,7 @@ The setup of standard CRUD operations from one class to the next had been done s
 Some key features of this project:
 1.  RESTful API's for PRODUCT service can be found at localhost:8080/service/getProduct/{id}
 2.  MVC used throughout the project.
-3.  [Swagger Docs](http://localhost:8080/swagger-ui/index.html)
+3.  Swagger Docs http://localhost:8080/swagger-ui/index.html)
 4.  Using spring security to limit usability.  Requires login to navigate to deeper pages.
 5.  Passwords are hashed when creating a new user as well as on login so that no human readable passwords are stored.
 6.  Using the spring session object to allow an easy shopping experience.  once user is logged in, they will have the ability to shop and purchse items. 
