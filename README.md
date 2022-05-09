@@ -4,6 +4,18 @@ This was a fork off CST-339 Java 3 using Spring Boot.  There was a few features 
 
 [CST-339 original Repo] (https://github.com/Malleas/CST-339_CLC)
 
+# How to run / install
+There are some prerequisites to running this application locally, listed below:
+1.  Ensure you have MAMP (or whatever AMP version works on your OS) installed and running.
+2.  Clone the project.  When cloned, do a maven clean & install.  If using Intellij, right click on the project root and click on maven->reload project.
+## Database setup
+1.  Locate the finalDDL.sql and execute to setup tables.
+2.  Locate the role.sql and execute to populate roles table.  NOTE:  You can not create a new user without the roles table having data in it.
+3.  Use the Products_Mockt_Data.csv and import this data into your PRODUCTS table to preload data.
+
+## Running the application
+From here it's as easy as going to localhost:8080 in your browser.  You will need to create a user first to navigate past login/registration pages.
+
 # Project Proposal
 At Random Widgets, we are all about creating the most random widget for all our customers.  After our initial Kickstarter campaign to gain the capital, we needed to invest further into the company with increased production lines, we have some to a fork in the road that simple word of mouth sales is starting to exceed our phone sales representative’s ability to keep up.  
 
@@ -29,3 +41,13 @@ Some key features of this project:
 The application back end was completed using JAVA with the Spring Boot framework.
 Database used was MySql running on MAMP locally
 CSS is supported by many Bootstrap libraries.  [Bootstrap](https://getbootstrap.com/)
+
+# Design Documentation
+## Sitemap
+![CST-339_SiteMap](https://user-images.githubusercontent.com/40237581/167412222-f2e7ec26-080e-45ba-a670-bc531bf55718.png)
+## Logical System Diagram
+![Logical System Diagram drawio](https://user-images.githubusercontent.com/40237581/167412370-327835f0-7295-4167-bd11-a0cedeee3e66.png)
+## Shopping Cart Logic Flow Diagram
+![shopping cart logic flow drawio](https://user-images.githubusercontent.com/40237581/167412476-58c364a5-7bd8-41d6-bb48-815f198b6b9e.png)
+
+
